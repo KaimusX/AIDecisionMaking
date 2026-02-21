@@ -151,11 +151,57 @@ def example(print_maze = True):
             [0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,] * 2,
             [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,] * 2,]
     
+    # TODO: Add switch to select maze.
+    """
+    MAZE 1
+     Start 1,2
+     Goal 4,3
+    """
+    maze1 = [[2,4,2,1,4,5,2],
+             [0,1,2,3,5,3,1],
+             [2,0,4,4,1,2,4],
+             [2,5,5,3,2,0,1],
+             [4,3,3,2,1,0,1],
+            ]
+    
+    """
+    MAZE 2
+     Start 3,6
+     Goal 5,1
+    """
+    maze2 = [[1,3,2,5,1,4,3],
+             [2,1,3,1,3,2,5],
+             [3,0,5,0,1,2,2],
+             [5,3,2,1,5,0,3],
+             [2,4,1,0,0,2,0],
+             [4,0,2,1,5,3,4],
+             [1,5,1,0,2,4,1],
+             ]
+    
+    """
+    MAZE 3
+     Start 1,2
+     Goal 8,8
+    """
+    maze3 = [[2,0,2,0,2,0,0,2,2,0],
+             [1,2,3,5,2,1,2,5,1,2],
+             [2,0,2,2,1,2,1,2,4,2],
+             [2,0,1,0,1,1,1,0,0,1],
+             [1,1,0,0,5,0,3,2,2,2],
+             [2,2,2,2,1,0,1,2,1,0],
+             [1,0,2,1,3,1,4,3,0,1],
+             [2,0,5,1,5,2,1,2,4,1],
+             [1,2,2,2,0,2,0,1,1,0],
+             [5,1,2,1,1,1,2,0,1,2],
+             ]
+    # TODO: add two more mazes of our own design minimum 10x10
+    
     start = (0, 0)
     end = (len(maze)-1, len(maze[0])-1)
 
     path = astar(maze, start, end)
 
+    # TODO: Update print logic
     if print_maze:
       for step in path:
         maze[step[0]][step[1]] = 2
@@ -176,5 +222,6 @@ def example(print_maze = True):
 def main():
    example()
 
+# TODO Update parameters to be runnale from cmd line
 if __name__ == '__main__':
    main()
