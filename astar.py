@@ -172,3 +172,9 @@ def example(print_maze = True):
         print("".join(line))
 
     print(path)
+
+def main():
+   example()
+
+if __name__ == '__main__':
+   main()
