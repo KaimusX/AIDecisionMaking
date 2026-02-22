@@ -92,9 +92,9 @@ def astar(maze, start, end, allow_diagonal_movement = False):
         # Found the goal
         if current_node == end_node:
             path = return_path(current_node)
-            cost = sum(maze[pos[0]][pos[1]] for pos in path) # gets cost from maze of path
-            elapsed = time.perf_counter() - t0 # stops timer
-            print(f"Path found: {path}\nCost: {cost}\nNodes generated: {node_count}\nTime: {elapsed:.6f}s")
+            cost = sum(maze[pos[0]][pos[1]] for pos in path[1:]) # 1: excludes start node
+            elapsed = (time.perf_counter() - t0) * 1000.0  # ms
+            print(f"Path found: {path}\nCost: {cost}\nNodes generated: {node_count}\nTime: {elapsed:.3f}ms")
             return path
 
         # Generate children
@@ -142,14 +142,14 @@ def astar(maze, start, end, allow_diagonal_movement = False):
 
     warn("Couldn't get a path to destination")
     path = return_path(current_node)
-    cost = sum(maze[pos[0]][pos[1]] for pos in path)
-    elapsed = time.perf_counter() - t0 # stopstimer
-    print(f"Partial path: {path}\nCost: {cost}\nNodes generated: {node_count}\nTime: {elapsed:.6f}s")
+    cost = sum(maze[pos[0]][pos[1]] for pos in path[1:])
+    elapsed = (time.perf_counter() - t0) * 1000.0
+    print(f"Partial path: {path}\nCost: {cost}\nNodes generated: {node_count}\nTime: {elapsed:.3f}ms")
     return path
 
 def example(print_maze = True):
 
-    maze = [[5,3,3,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,] * 2,
+    maze = [[1,4,3,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,] * 2,
             [0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,] * 2,
             [1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,] * 2,
             [1,1,1,5,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,] * 2,
