@@ -119,7 +119,9 @@ def astar(maze, start, end, allow_diagonal_movement = False):
 
             # Create the f, g, and h values
             child.g = current_node.g + maze[child.position[0]][child.position[1]]
-            child.h = ((child.position[0] - end_node.position[0]) ** 2) + ((child.position[1] - end_node.position[1]) ** 2)
+            # squared euclidian
+            #  child.h = ((child.position[0] - end_node.position[0]) ** 2) + ((child.position[1] - end_node.position[1]) ** 2)
+            child.h = abs(child.position[0] - end_node.position[0]) + abs(child.position[1] - end_node.position[1])
             child.f = child.g + child.h
 
             # Child is already in the open list
