@@ -1,7 +1,7 @@
 # Credit for this: Nicholas Swift
 # as found at https://medium.com/@nicholas.w.swift/easy-a-star-pathfinding-7e6689c7f7b2
 from warnings import warn
-import heapq
+import heapq, time
 
 class Node:
     """
@@ -41,12 +41,15 @@ def return_path(current_node):
 
 def astar(maze, start, end, allow_diagonal_movement = False):
     """
-    Returns a list of tuples as a path from the given start to the given end in the given maze
+    Returns a list of tuples as a path from the given start to the given end in the given maze.
+    Also prints the total path cost, number of nodes generated including duplicates,and elapssed runtime.
     :param maze:
     :param start:
     :param end:
     :return:
     """
+    # timing start
+    t0 = time.perf_counter()
 
     # Create start and end node
     start_node = Node(None, start)
@@ -58,9 +61,10 @@ def astar(maze, start, end, allow_diagonal_movement = False):
     open_list = []
     closed_list = []
 
-    # Heapify the open_list and Add the start node
-    heapq.heapify(open_list) 
+    # heap and count of nodes generated
+    heapq.heapify(open_list)
     heapq.heappush(open_list, start_node)
+    node_count = 1   # start node counts as created
 
     # Adding a stop condition
     outer_iterations = 0
@@ -87,7 +91,11 @@ def astar(maze, start, end, allow_diagonal_movement = False):
 
         # Found the goal
         if current_node == end_node:
-            return return_path(current_node)
+            path = return_path(current_node)
+            cost = sum(maze[pos[0]][pos[1]] for pos in path) # gets cost from maze of path
+            elapsed = time.perf_counter() - t0 # stops timer
+            print(f"Path found: {path}\nCost: {cost}\nNodes generated: {node_count}\nTime: {elapsed:.6f}s")
+            return path
 
         # Generate children
         children = []
@@ -107,6 +115,7 @@ def astar(maze, start, end, allow_diagonal_movement = False):
 
             # Create new node
             new_node = Node(current_node, node_position)
+            node_count += 1  # count every instantiation regardless of duplication
 
             # Append
             children.append(new_node)
@@ -132,11 +141,15 @@ def astar(maze, start, end, allow_diagonal_movement = False):
             heapq.heappush(open_list, child)
 
     warn("Couldn't get a path to destination")
-    return return_path(current_node)
+    path = return_path(current_node)
+    cost = sum(maze[pos[0]][pos[1]] for pos in path)
+    elapsed = time.perf_counter() - t0 # stopstimer
+    print(f"Partial path: {path}\nCost: {cost}\nNodes generated: {node_count}\nTime: {elapsed:.6f}s")
+    return path
 
 def example(print_maze = True):
 
-    maze = [[1,3,3,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,] * 2,
+    maze = [[5,3,3,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,] * 2,
             [0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,] * 2,
             [1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,] * 2,
             [1,1,1,5,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,] * 2,
@@ -219,8 +232,6 @@ def example(print_maze = True):
           elif col == 9:
             line.append(".")
         print("".join(line))
-
-    print(path)
 
 def main():
    example()
