@@ -141,15 +141,14 @@ def astar(maze, start, end, allow_diagonal_movement = False):
             heapq.heappush(open_list, child)
 
     warn("Couldn't get a path to destination")
-    path = return_path(current_node)
-    cost = sum(maze[pos[0]][pos[1]] for pos in path[1:])
+    # no valid path
     elapsed = (time.perf_counter() - t0) * 1000.0
-    print(f"Partial path: {path}\nCost: {cost}\nNodes generated: {node_count}\nTime: {elapsed:.3f}ms")
-    return path
+    print(f"Path: NULL\nCost: -1\nNodes generated: {node_count}\nTime: {elapsed:.3f}ms")
+    return []
 
 def example(print_maze = True):
 
-    maze = [[1,4,3,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,] * 2,
+    maze = [[1,4,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,] * 2,
             [0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,] * 2,
             [1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,] * 2,
             [1,1,1,5,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,] * 2,
